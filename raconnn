@@ -8,14 +8,13 @@
 # Download: github.com/pmenzel/raconnn
 #
 
+threads=4
 
 command -v racon >/dev/null 2>/dev/null || { echo "Error: racon not found" >&2; exit 1; }
 command -v minimap2 >/dev/null 2>/dev/null || { echo "Error: minimap2 not found" >&2; exit 1; }
 command -v seq >/dev/null 2>/dev/null || { echo "Error: seq not found" >&2; exit 1; }
 
-
-#test arguments, must be fastq sam and fa
-
+#test arguments, must be numer of iterations, fastq, and fasta
 [ -z "$1" ] && { echo "Specify number of iterations as first argument" >&2; exit 1; }
 [ -z "$2" -o ! -s "$2" ] && { echo "Specify reads fastq file as second argument" >&2; exit 1; }
 [ -z "$3" -o ! -s "$3" ] && { echo "Specify assembly fasta file as third argument" >&2; exit 1; }
@@ -31,7 +30,7 @@ for i in `seq 1 $1`
 do
 	echo "Polishing round $i / $1" >&2
 	minimap2 -ax map-ont -t 4 $DIR_temp/prev.fa ../../../fastq/b_subtilis_reads.fastq.gz > $DIR_temp/map.sam
-	racon $2 $DIR_temp/map.sam $DIR_temp/prev.fa > $DIR_temp/polished.fa
+	racon --threads $threads --include-unpolished $2 $DIR_temp/map.sam $DIR_temp/prev.fa > $DIR_temp/polished.fa
 	mv $DIR_temp/polished.fa $DIR_temp/prev.fa
 
 done
