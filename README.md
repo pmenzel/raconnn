@@ -1,6 +1,6 @@
 # raconnn
 
-A wrapper script for polishing a genome assembly mutiple iterations using [racon](https://github.com/lbcb-sci/racon)
+A wrapper script for polishing a genome assembly in mutiple iterations using [racon](https://github.com/lbcb-sci/racon).
 
 Requires `racon` and `minimap2` to be installed.
 
