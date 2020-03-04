@@ -29,7 +29,7 @@ cp $3 $DIR_temp/prev.fa
 for i in `seq 1 $1`
 do
 	echo "Polishing round $i / $1" >&2
-	minimap2 -ax map-ont -t 4 $DIR_temp/prev.fa $2 > $DIR_temp/map.sam
+	minimap2 -ax map-ont -t $threads $DIR_temp/prev.fa $2 > $DIR_temp/map.sam
 	racon --threads $threads --include-unpolished $2 $DIR_temp/map.sam $DIR_temp/prev.fa > $DIR_temp/polished.fa
 	mv $DIR_temp/polished.fa $DIR_temp/prev.fa
 
